@@ -6,7 +6,7 @@ This gem adds rspec matchers that allow you to check if the html code produced b
 
 You need rspec for this gem to work. In addition add this to your gemfile:
 
-  gem "w3c_rspec_validators"
+    gem "w3c_rspec_validators"
 
 ## Usage
 
@@ -26,6 +26,6 @@ been parsed and eventually corrected by the browser:
 ```ruby
 scenario "visit landing page" do
   visit "/"
-  page.driver.source.should be_valid_html5
+  page.driver.source.should be_valid_html
 end
 ```
