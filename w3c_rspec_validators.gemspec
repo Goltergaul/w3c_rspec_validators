@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Dominik Goltermann"]
   s.email       = ["dominik@goltermann.cc"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{This gem adds w3c validation in form of rspec matchers}
+  s.description = %q{At this time it allows for validation of html (including html5) produced by rspec acceptance tests. In addition you can configure the gem to use a locally installed validation service instead of the online w3c servers}
 
   s.rubyforge_project = "w3c_rspec_validators"
 
