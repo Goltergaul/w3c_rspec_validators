@@ -29,3 +29,6 @@ scenario "visit landing page" do
   page.driver.source.should be_valid_html
 end
 ```
+
+If you want to check html code, that has been modified by javascript, use "page.body.should be_valid_html".
+Note that a browser may correct wrongly nested tags on its own.
