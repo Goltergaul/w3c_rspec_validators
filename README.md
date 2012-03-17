@@ -32,3 +32,12 @@ end
 
 If you want to check html code, that has been modified by javascript, use "page.body.should be_valid_html".
 Note that a browser may correct wrongly nested tags on its own.
+
+## Running faster offline validation
+
+If you do not want to use the online W3C Validation service, which is default, you can set the validator url to anything yo want:
+
+    W3cRspecValidators::HTML5Validator.validator_uri = "http://localhost/check"
+
+Check this url to see how to install your local version of the W3C validation service: http://validator.w3.org/docs/install.html
+For local HTML5 validation to work you'll need validator.nu running locally too: http://about.validator.nu/
