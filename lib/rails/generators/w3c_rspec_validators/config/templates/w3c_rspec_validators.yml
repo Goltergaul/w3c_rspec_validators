@@ -1,0 +1,2 @@
+config:
+  w3c_service_uri: "http://localhost.de/check"

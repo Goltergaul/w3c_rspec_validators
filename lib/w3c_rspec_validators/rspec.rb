@@ -1,14 +1,13 @@
 module W3cRspecValidators
   
   RSpec::Matchers.define :be_valid_html do
-    response = nil
+    validator = Validator.new
     match do |body|
-      validator = MarkupValidator.new :validator_uri => HTML5Validator.validator_uri
-      response = validator.validate_text(body)
-      response.errors.length == 0
+      validator.validate_text(body)
+      validator.response.errors.length == 0
     end
     failure_message_for_should do |actual|
-      response.errors.map do |err|
+      validator.response.errors.map do |err|
         seperator = "######\n"
         error = /line \d.*/.match err.to_s
         line_number = /line (\d*)/.match(err.to_s)[1].to_i

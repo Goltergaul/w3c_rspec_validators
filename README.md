@@ -35,9 +35,19 @@ Note that a browser may correct wrongly nested tags on its own.
 
 ## Running faster offline validation
 
-If you do not want to use the online W3C Validation service, which is default, you can set the validator url to anything yo want:
+If you do not want to use the online W3C Validation service, which is default, you can set the validator url to a locally runnig version
+of the W3C Validator service by creating a config file:
 
-    W3cRspecValidators::HTML5Validator.validator_uri = "http://localhost/check"
+    rails g w3c_rspec_validators:config
 
 Check this url to see how to install your local version of the W3C validation service: http://validator.w3.org/docs/install.html
 For local HTML5 validation to work you'll need validator.nu running locally too: http://about.validator.nu/
+
+## Licence
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

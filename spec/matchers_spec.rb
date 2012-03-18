@@ -56,7 +56,8 @@ describe "be_valid_html" do
   end
 
   it "should use a custom uri if provided" do
-    W3cRspecValidators::HTML5Validator.validator_uri = "http://blubb.de"
+    W3cRspecValidators::Config.stub(:get).and_return("w3c_service_uri" => "http://blubb.de")
+    
     validator = MarkupValidator.new
     MarkupValidator.should_receive(:new).with(:validator_uri => "http://blubb.de").and_return validator
 
