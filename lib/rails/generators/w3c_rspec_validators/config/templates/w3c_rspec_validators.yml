@@ -1,2 +1,3 @@
 config:
   w3c_service_uri: "http://localhost.de/check"
+  w3c_css_service_uri: "http://css.localhost.de/validator"

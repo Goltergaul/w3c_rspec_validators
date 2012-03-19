@@ -10,7 +10,9 @@ You need rspec for this gem to work. In addition add this to your gemfile:
 
 ## Usage
 
-Here is an example for using it in an acceptance test:
+Here are examples for using it in acceptance tests:
+
+### HTML Validation
 
 ```ruby
 scenario "visit landing page" do
@@ -33,6 +35,18 @@ end
 If you want to check html code, that has been modified by javascript, use "page.body.should be_valid_html".
 Note that a browser may correct wrongly nested tags on its own.
 
+### CSS Validation
+
+W3cRspecValidators::CssFiles.compiled will run rake assets:precompile and rake assets:clean and return
+the applications css as string.
+
+```ruby
+it "should be valid css" do
+  W3cRspecValidators::CssFiles.compiled.should be_valid_css
+end
+```
+
+
 ## Running faster offline validation
 
 If you do not want to use the online W3C Validation service, which is default, you can set the validator url to a locally runnig version
@@ -41,7 +55,9 @@ of the W3C Validator service by creating a config file:
     rails g w3c_rspec_validators:config
 
 Check this url to see how to install your local version of the W3C validation service: http://validator.w3.org/docs/install.html
-For local HTML5 validation to work you'll need validator.nu running locally too: http://about.validator.nu/
+For local HTML5 validation to work you'll need validator.nu running locally too: http://about.validator.nu
+
+For local CSS validation to work you'll need http://jigsaw.w3.org/css-validator/DOWNLOAD.html
 
 ## Licence
 MIT License

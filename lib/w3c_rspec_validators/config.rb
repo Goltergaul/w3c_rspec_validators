@@ -8,6 +8,8 @@ module W3cRspecValidators
       if config_file.file? &&
         Config.load!(config_file)
       end
+
+     # puts ActionDispatch::Routing::UrlFor::url_for("/")
     end
   end
   

@@ -5,8 +5,9 @@ describe W3cRspecValidators::Validator do
 
   describe "initialize" do
     it "should initialize MarkupValidator with config value" do
-      W3cRspecValidators::Config.stub(:get).and_return("w3c_service_uri" => "http://blubb.de")
+      W3cRspecValidators::Config.stub(:get).and_return("w3c_service_uri" => "http://blubb.de", "w3c_css_service_uri" => "http://test.de")
       MarkupValidator.should_receive(:new).with(validator_uri: "http://blubb.de")
+      CSSValidator.should_receive(:new).with(validator_uri: "http://test.de")
 
       W3cRspecValidators::Validator.new
     end
