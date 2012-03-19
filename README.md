@@ -37,8 +37,10 @@ Note that a browser may correct wrongly nested tags on its own.
 
 ### CSS Validation
 
-W3cRspecValidators::CssFiles.compiled will run rake assets:precompile and rake assets:clean and return
+W3cRspecValidators::CssFiles.compiled will run rake assets:precompile and returns
 the applications css as string.
+
+WARNING: This also deletes the folder public/assets so that the compiled assets are removed after the tests.
 
 ```ruby
 it "should be valid css" do
