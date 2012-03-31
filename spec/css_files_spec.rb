@@ -4,8 +4,9 @@ describe "css_files" do
   describe "self.compiled" do
   
     before(:each) do
-      Object.should_receive(:system).with "rake assets:precompile"
-      Object.should_receive(:system).with "rake assets:clean"
+      Object.should_receive(:system).with "rake -q assets:precompile"
+      Rails.stub(:root).and_return "railsroot"
+      FileUtils.should_receive(:rm_rf).with "railsroot/public/assets/"
     end
 
     it "should read css files from a directory" do

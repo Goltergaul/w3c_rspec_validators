@@ -1,3 +1,6 @@
+# you cann comment out the service uris that you don't need. The default online
+# validator will be used then.
+
 config:
   w3c_service_uri: "http://localhost.de/check"
   w3c_css_service_uri: "http://css.localhost.de/validator"
