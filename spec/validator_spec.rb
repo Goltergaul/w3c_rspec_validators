@@ -14,7 +14,7 @@ describe W3cRspecValidators::Validator do
   end
 
   describe "validate_text" do
-    it "should raise an exception if validation fails silently" do
+    it "should raise an exception if validation fails silently (eg. validator.nu engine misconfiguration)" do
       class Dummy
         def checked_by
           ""
@@ -25,6 +25,18 @@ describe W3cRspecValidators::Validator do
       expect {
         W3cRspecValidators::Validator.new.validate_text("dummy")
       }.to raise_exception
+    end
+  end
+
+  describe "error handling" do
+    it "should retry 3 times if there is a connection error" do
+      MarkupValidator.any_instance.stub(:validate_text).and_raise "error"
+      validator = W3cRspecValidators::Validator.new
+      validator.should_receive(:sleep).exactly(2).times
+      
+      lambda {
+        validator.validate_html("dummy")
+      }.should raise_error()
     end
   end
 end
