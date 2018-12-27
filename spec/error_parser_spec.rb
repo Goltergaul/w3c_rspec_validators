@@ -4,8 +4,8 @@ describe "error_parser" do
 
   describe "self.parse_css" do
     before(:each) do
-      @css_error_message = "ERROR; URI: file://localhost/TextArea; line 7: 
-        
+      @css_error_message = "ERROR; URI: file://localhost/TextArea; line 7:
+
                                 Property foo doesn't exist :"
       @css = "
 body {
@@ -18,9 +18,10 @@ body {
     end
 
     it "should properly format css errors" do
-      W3cRspecValidators::ErrorParser.parse_css_error(@css_error_message, @css)
-        .should == "######
- Property foo doesn't exist :
+      error = W3cRspecValidators::ErrorParser.parse_css_error(@css_error_message, @css)
+
+      expect(error).to eq "######
+Property foo doesn't exist :
 Real code location(guessed) in File ../../app/assets/stylesheets/home.css.scss on line 2
 
 Code context:
@@ -46,8 +47,9 @@ Code context:
     end
 
     it "should properly format a html error message" do
-      W3cRspecValidators::ErrorParser.parse_html_error(@html_error_message, @html)
-        .should == "######
+      error = W3cRspecValidators::ErrorParser.parse_html_error(@html_error_message, @html)
+
+      expect(error).to eq "######
 line 7: An img element must have an alt attribute, except under certain conditions. For details, consult guidance on providing text alternatives for images.
 
           </head>
