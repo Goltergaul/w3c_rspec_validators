@@ -21,29 +21,37 @@ describe "rspec matchers" do
 
   describe "be_valid_html" do
     it "should be valid" do
-      "<!DOCTYPE HTML SYSTEM>
+      body = <<~HTML
+        <!DOCTYPE HTML>
         <html>
           <head>
             <title>dd</title>
           </head>
           <body>
           </body>
-        </html>".should be_valid_html
+        </html>
+      HTML
+
+      expect(body).to be_valid_html
     end
 
     it "should not be valid" do
-      "<!DOCTYPE HTML SYSTEM>
+      body = <<~HTML
+        <!DOCTYPE HTML>
         <html>
           <head>
             <titled>dd</title>
           </head>
           <body></body>
-        </html>".should_not be_valid_html
+        </html>
+      HTML
+
+      expect(body).to_not be_valid_html
     end
 
     it "should complain about an missing src attribute" do
-      lambda {
-        "<!DOCTYPE HTML SYSTEM>
+      body = <<~HTML
+        <!DOCTYPE HTML>
         <html>
           <head>
             <title>dd</title>
@@ -51,35 +59,36 @@ describe "rspec matchers" do
           <body>
             <img />
           </body>
-        </html>".should be_valid_html
-      }.should fail_matching(/line 7: required attribute "SRC" not specified.*<img \/>/m)
+        </html>
+      HTML
+
+      expect {
+        expect(body).to be_valid_html
+      }.to fail_matching(/line 7: Element “img” is missing required attr/m)
     end
 
     it "should use a custom uri if provided" do
-      W3cRspecValidators::Config.stub(:get).and_return("w3c_service_uri" => "http://blubb.de")
-      
-      validator = MarkupValidator.new
-      MarkupValidator.should_receive(:new).with(:validator_uri => "http://blubb.de").and_return validator
+      allow(W3cRspecValidators::Config).to receive(:get).and_return("w3c_service_uri" => "https://validator.nu/")
 
-      "dummy".should_not be_valid_html
+      expect(NuValidator).to receive(:new).with(validator_uri: "https://validator.nu/").and_call_original
+
+      expect("dummy").to_not be_valid_html
     end
   end
 
   describe "be_valid_css" do
     it "should be valid" do
-      "body {}".should be_valid_css
+      expect("body {}").to be_valid_css
     end
 
     it "should not be valid" do
-      "body { foo: 12px; }".should_not be_valid_css
+      expect("body { foo: 12px; }").to_not be_valid_css
     end
 
     it "should not be valid" do
-      lambda {
-        "body { foo: 12px; }".should be_valid_css
-      }.should fail_matching(/Property foo doesn't exist/)
+      expect {
+        expect("body { foo: 12px; }").to be_valid_css
+      }.to fail_matching(/Property “foo” doesn't exist/)
     end
-
   end
-
 end

@@ -5,9 +5,9 @@ describe W3cRspecValidators::Validator do
 
   describe "initialize" do
     it "should initialize MarkupValidator with config value" do
-      W3cRspecValidators::Config.stub(:get).and_return("w3c_service_uri" => "http://blubb.de", "w3c_css_service_uri" => "http://test.de")
-      MarkupValidator.should_receive(:new).with(validator_uri: "http://blubb.de")
-      CSSValidator.should_receive(:new).with(validator_uri: "http://test.de")
+      allow(W3cRspecValidators::Config).to receive(:get).and_return("w3c_service_uri" => "http://blubb.de", "w3c_css_service_uri" => "http://test.de")
+      expect(NuValidator).to receive(:new).with(validator_uri: "http://blubb.de")
+      expect(CSSValidator).to receive(:new).with(validator_uri: "http://test.de")
 
       W3cRspecValidators::Validator.new
     end
@@ -20,23 +20,24 @@ describe W3cRspecValidators::Validator do
           ""
         end
       end
-      MarkupValidator.any_instance.stub(:validate_text).and_return Dummy.new
-      
+
+      allow_any_instance_of(NuValidator).to receive(:validate_text).and_return(Dummy.new)
+
       expect {
-        W3cRspecValidators::Validator.new.validate_text("dummy")
-      }.to raise_exception
+        W3cRspecValidators::Validator.new.validate_html("dummy")
+      }.to raise_exception(W3cRspecValidators::Validator::Error)
     end
   end
 
   describe "error handling" do
     it "should retry 3 times if there is a connection error" do
-      MarkupValidator.any_instance.stub(:validate_text).and_raise "error"
+      allow_any_instance_of(NuValidator).to receive(:validate_text).and_raise(StandardError)
       validator = W3cRspecValidators::Validator.new
-      validator.should_receive(:sleep).exactly(2).times
-      
-      lambda {
+      expect(validator).to receive(:sleep).exactly(2).times
+
+      expect {
         validator.validate_html("dummy")
-      }.should raise_error()
+      }.to raise_exception(StandardError)
     end
   end
 end

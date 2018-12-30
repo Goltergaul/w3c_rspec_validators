@@ -1,10 +1,12 @@
 module W3cRspecValidators
   class Validator
+    class Error < StandardError; end
+
     attr_reader :response
     include W3CValidators
 
     def initialize
-      @html_validator = MarkupValidator.new validator_uri: Config.get["w3c_service_uri"]
+      @html_validator = NuValidator.new validator_uri: Config.get["w3c_service_uri"]
       @css_validator = CSSValidator.new validator_uri: Config.get["w3c_css_service_uri"]
     end
 
@@ -23,7 +25,7 @@ module W3cRspecValidators
         @response = @html_validator.validate_text(text)
       }
       try validate
-      raise "Error: Invalid validation response! Tip: check if validator.nu engine is configured correctly" if @response.checked_by.blank?
+      raise Error, "Error: Invalid validation response! Tip: check if validator.nu engine is configured correctly" if @response.checked_by.blank?
       @response
     end
 
@@ -32,7 +34,7 @@ module W3cRspecValidators
         @response = @css_validator.validate_text(text)
       }
       try validate
-      raise "Error: Invalid validation response! Tip: check if validator.nu engine is configured correctly" if @response.checked_by.blank?
+      raise Error, "Error: Invalid validation response! Tip: check if validator.nu engine is configured correctly" if @response.checked_by.blank?
       @response
     end
   end
